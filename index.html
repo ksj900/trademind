@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRADEMIND · 주식 투자자를 위한 멘탈 케어</title>
+<meta name="description" content="투자 맥락 안에서 감정에 개입하는 CBT 기반 AI 멘탈 케어 서비스, TRADEMIND 프로젝트 소개">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf9; --card:#ffffff; --ink:#1a1a1a; --navy:#2b3558; --cap:#79716b;
+  --line:#e7e5e4; --stone:#1c1917; --stone7:#44403c; --mute:#f5f5f4;
+  --peach:#fce1d9; --coral:#f6a58c; --blue:#dfe7fb; --peri:#8ea6ee;
+  --r:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:"SUIT Variable","SUIT",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:88px 0;position:relative}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:#fff;padding:6px 14px;border-radius:99px;background:linear-gradient(90deg,var(--coral),var(--peri))}
+h2{font-size:clamp(26px,4.2vw,40px);font-weight:800;line-height:1.3;margin:16px 0 10px;letter-spacing:-.02em}
+.lead{color:var(--cap);font-size:clamp(15px,1.8vw,18px);max-width:720px}
+.center{text-align:center}.center .lead{margin:0 auto}
+.serif{font-family:"DM Serif Display",serif;letter-spacing:.01em;color:var(--navy)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(250,250,249,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+nav .logo{font-size:22px;text-decoration:none}
+nav ul{display:flex;gap:22px;list-style:none}
+nav a{color:var(--stone7);text-decoration:none;font-size:14px;font-weight:600}
+@media(max-width:720px){nav ul{display:none}}
+
+/* aura */
+.aura{width:132px;height:132px;border-radius:50%;margin:0 auto;position:relative;
+  background:radial-gradient(circle at 50% 78%,#ff9d7e 0,#ffc9b8 26%,transparent 52%),radial-gradient(circle at 50% 30%,#6f8ff0 0,#a9bcf6 38%,#e9eeff 70%);
+  box-shadow:0 0 0 1px rgba(142,166,238,.5),0 18px 60px rgba(246,165,140,.45),0 0 80px rgba(142,166,238,.35);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.aura{animation:none}html{scroll-behavior:auto}}
+
+/* hero */
+.hero{padding:72px 0 40px;background:linear-gradient(180deg,#e6ebff 0,#efe9f4 38%,#fdeee9 78%,var(--bg) 100%);text-align:center}
+.hero h1{font-size:clamp(44px,9vw,92px);line-height:1;margin:26px 0 10px;font-weight:400}
+.hero .tag{font-size:clamp(16px,2.2vw,21px);color:#55608a;font-weight:600}
+.hero .one{font-size:clamp(20px,3.2vw,30px);font-weight:800;margin:30px auto 0;max-width:720px;line-height:1.4;letter-spacing:-.02em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-size:13px;font-weight:700;color:var(--stone7)}
+.chip b{color:var(--cap);font-weight:600;margin-right:6px}
+.chip.dark{background:var(--stone);color:#fff;border-color:var(--stone)}.chip.dark b{color:#d6d3d1}
+
+/* phones */
+.phone{flex:none;width:232px;border-radius:38px;padding:8px;background:#1c1917;box-shadow:0 30px 60px -20px rgba(43,53,88,.35),0 0 0 1px rgba(0,0,0,.06)}
+.phone .scr{border-radius:30px;overflow:hidden;aspect-ratio:390/844;background:#fff;overflow-y:auto;scrollbar-width:none}
+.phone .scr::-webkit-scrollbar{display:none}
+.phone img{width:100%}
+.phone.sm{width:196px;border-radius:32px;padding:7px}.phone.sm .scr{border-radius:26px}
+.trio{display:flex;justify-content:center;align-items:flex-end;gap:26px;margin-top:54px}
+.trio .phone:nth-child(1){transform:rotate(-5deg) translateY(18px)}
+.trio .phone:nth-child(3){transform:rotate(5deg) translateY(18px)}
+@media(max-width:760px){.trio{gap:0}.trio .phone{width:46vw;max-width:210px}.trio .phone:nth-child(1){margin-right:-18vw;transform:rotate(-7deg) translateY(22px) scale(.86)}.trio .phone:nth-child(3){margin-left:-18vw;transform:rotate(7deg) translateY(22px) scale(.86)}.trio .phone:nth-child(2){z-index:2}}
+.scrollhint{font-size:12px;color:var(--cap);margin-top:26px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;right:-50px;top:-50px;width:150px;height:150px;border-radius:50%;background:var(--blue);opacity:.7}
+.stat:nth-child(2)::after{background:var(--peach)}.stat:nth-child(3)::after{background:linear-gradient(135deg,var(--blue),var(--peach))}
+.stat>*{position:relative;z-index:1}
+.stat .num{font-size:clamp(44px,6vw,68px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:var(--navy)}
+.stat .num small{font-size:.42em;letter-spacing:0;margin-left:2px}
+.stat .lab{font-weight:800;font-size:17px;margin-top:10px}
+.stat .src{font-size:12px;color:var(--cap);margin-top:4px}
+.bar{height:8px;border-radius:9px;background:var(--mute);margin-top:18px;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--stone)}
+.punch{margin-top:26px;background:var(--stone);color:#fff;border-radius:var(--r);padding:30px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:center;text-align:center}
+.punch .x{font-size:clamp(18px,2.6vw,24px);font-weight:800}
+.punch .x s{color:#a8a29e;font-weight:600}
+.punch .x em{font-style:normal;background:linear-gradient(90deg,#ffb9a3,#b6c6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:760px){.stats{grid-template-columns:1fr}}
+
+/* venn */
+.gap{background:linear-gradient(180deg,var(--bg),#f1f3fd 50%,var(--bg))}
+.venn{max-width:820px;margin:36px auto 0}
+.venn svg{width:100%;height:auto;display:block}
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:820px;margin:8px auto 0}
+.legend div{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 18px;font-size:14px;color:var(--stone7)}
+.legend b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.legend .me{background:var(--stone);color:#e7e5e4;border-color:var(--stone)}.legend .me b{color:#fff}
+@media(max-width:760px){.legend{grid-template-columns:1fr}}
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 18px 30px;text-align:center;position:relative}
+.step .no{font-family:"DM Serif Display",serif;font-size:44px;line-height:1;background:linear-gradient(135deg,var(--coral),var(--peri));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h3{font-size:21px;font-weight:800;margin:6px 0 4px}
+.step p{font-size:14px;color:var(--cap);min-height:44px;margin-bottom:18px}
+.step .phone{margin:0 auto}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:46px;z-index:3;width:30px;height:30px;border-radius:50%;background:var(--stone);color:#fff;font-size:15px;display:grid;place-items:center}
+@media(max-width:980px){.flow{grid-template-columns:repeat(2,1fr)}.step:nth-child(2)::after{display:none}}
+@media(max-width:520px){.flow{grid-template-columns:1fr}.step::after{display:none!important}}
+
+/* input strip */
+.strip{margin-top:70px}
+.strip h3{font-size:22px;font-weight:800;text-align:center}
+.strip>p{color:var(--cap);text-align:center;font-size:15px;margin-top:4px}
+.rail{display:flex;gap:20px;overflow-x:auto;padding:30px 20px 34px;margin:0 -20px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.rail figure{flex:none;scroll-snap-align:center;text-align:center}
+.rail figcaption{font-size:13px;font-weight:700;color:var(--stone7);margin-top:14px}
+.rail figcaption span{display:block;font-weight:500;color:var(--cap);font-size:12px}
+
+
+/* distortions */
+.dist{background:var(--stone);color:#fff;border-radius:40px;padding:56px 28px;text-align:center;margin-top:30px;position:relative;overflow:hidden}
+.dist::before,.dist::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;filter:blur(70px);opacity:.42}
+.dist::before{background:var(--peri);left:-110px;top:-140px}.dist::after{background:var(--coral);right:-110px;bottom:-160px}
+.dist>*{position:relative;z-index:1}
+.dist h3{font-size:clamp(22px,3.4vw,30px);font-weight:800}
+.dist p{color:#d6d3d1;font-size:15px;margin-top:6px}
+.tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px}
+.tags span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:11px 18px;font-size:15px;font-weight:700}
+.tags small{font-weight:500;color:#d6d3d1;margin-left:6px;font-size:12px}
+.qa{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;max-width:860px;margin:34px auto 0;text-align:left}
+.qa div{background:#fff;color:var(--ink);border-radius:22px;padding:16px 18px;font-size:14px;font-weight:600}
+.qa div b{display:block;font-size:11px;letter-spacing:.1em;color:var(--cap);margin-bottom:4px}
+.qa i{font-style:normal;color:#a8a29e}
+@media(max-width:760px){.qa{grid-template-columns:1fr}.qa i{text-align:center;transform:rotate(90deg)}}
+
+/* together */
+.tog{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.tog .vis{display:flex;justify-content:center;gap:22px;align-items:flex-start}
+.donut{width:210px;height:210px;margin:26px 0 8px}
+.dl{display:flex;gap:26px;font-size:14px;font-weight:700}
+.dl span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--stone);margin-right:7px}
+.dl span+span::before{background:#d6d3d1}
+.note{font-size:12px;color:var(--cap);margin-top:10px}
+.quote{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px 18px;font-size:14px;color:var(--stone7);margin-top:12px;max-width:440px}
+@media(max-width:860px){.tog{grid-template-columns:1fr}.tog .vis .phone:nth-child(2){display:none}}
+
+/* decisions */
+.dec{background:linear-gradient(180deg,var(--bg),#fdf1ed 55%,var(--bg))}
+.arch{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;margin-top:40px}
+.arch{overflow-x:auto}.arch svg{width:100%;min-width:640px;height:auto;display:block}
+.to{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.tcard .case{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--peri)}
+.tcard h3{font-size:20px;font-weight:800;margin:4px 0 18px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}
+.vs div{border-radius:18px;padding:16px;font-size:14px;font-weight:700}
+.vs .no{background:var(--mute);color:#a8a29e;text-decoration:line-through}
+.vs .yes{background:var(--stone);color:#fff}
+.vs b{display:block;font-size:11px;letter-spacing:.1em;margin-bottom:6px;text-decoration:none;font-weight:800}
+.vs .no b{color:#a8a29e}.vs .yes b{color:#ffb9a3}
+.vs i{align-self:center;font-style:normal;color:var(--cap)}
+.why{font-size:14px;color:var(--cap);margin-top:14px}
+@media(max-width:760px){.to{grid-template-columns:1fr}}
+
+/* hypo + road */
+.hv{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px}
+.hv div{border-radius:var(--r);padding:30px}
+.hv .h{background:linear-gradient(135deg,var(--blue),#f3ecf6)}
+.hv .v{background:linear-gradient(135deg,#fbeee9,var(--peach))}
+.hv span{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--navy)}
+.hv h3{font-size:clamp(18px,2.4vw,23px);font-weight:800;margin:8px 0 10px;line-height:1.4}
+.hv p,.hv li{font-size:14px;color:var(--stone7)}
+.hv ul{list-style:none}.hv li{padding-left:18px;position:relative;margin-top:4px}.hv li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--coral)}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:60px;position:relative}
+.road::before{content:"";position:absolute;left:8%;right:8%;top:17px;height:3px;background:linear-gradient(90deg,var(--stone),var(--peri),var(--coral));border-radius:3px}
+.road div{text-align:center;padding:0 14px;position:relative}
+.road div::before{content:"";display:block;width:36px;height:36px;border-radius:50%;margin:0 auto 16px;background:#fff;border:3px solid var(--stone);position:relative}
+.road div:nth-child(2)::before{border-color:var(--peri)}.road div:nth-child(3)::before{border-color:var(--coral)}
+.road b{font-size:12px;letter-spacing:.1em;color:var(--cap)}
+.road h4{font-size:18px;font-weight:800;margin:2px 0 6px}
+.road p{font-size:13.5px;color:var(--stone7)}
+.bm{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:54px}
+.bm div{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 24px;text-align:center;min-width:190px}
+.bm div.k{background:var(--stone);color:#fff;border-color:var(--stone)}
+.bm b{display:block;font-size:17px}.bm small{color:var(--cap);font-size:12.5px}.bm .k small{color:#d6d3d1}
+.bm i{font-style:normal;font-size:20px;color:var(--cap)}
+@media(max-width:760px){.hv{grid-template-columns:1fr}.road{grid-template-columns:1fr;gap:26px}.road::before{display:none}}
+
+/* retro */
+.retro{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.retro>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.retro .n{font-family:"DM Serif Display",serif;font-size:34px;color:var(--peri);line-height:1}
+.retro h3{font-size:18px;font-weight:800;margin:10px 0 6px;line-height:1.4}
+.retro p{font-size:14px;color:var(--cap)}
+@media(max-width:760px){.retro{grid-template-columns:1fr}}
+
+footer{padding:70px 0 60px;text-align:center;background:linear-gradient(180deg,var(--bg),#efe9f4 60%,#e6ebff)}
+footer .serif{font-size:34px}
+footer p{color:var(--cap);font-size:14px;margin-top:6px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.btn{background:var(--stone);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:15px 26px;border-radius:18px}
+.btn.o{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.fine{font-size:12px;margin-top:30px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo serif" href="#top">TRADEMIND</a>
+  <ul><li><a href="#problem">문제</a></li><li><a href="#gap">시장</a></li><li><a href="#solution">솔루션</a></li><li><a href="#together">TOGETHER</a></li><li><a href="#decision">의사결정</a></li><li><a href="#next">검증·다음</a></li></ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="aura" aria-hidden="true"></div>
+  <h1 class="serif">TRADEMIND</h1>
+  <p class="tag">선택보다 먼저, 마음을 살피는 연습</p>
+  <p class="one">투자 정보는 넘치지만,<br>무너지는 감정은 방치되어 있습니다.</p>
+  <div class="chips">
+    <span class="chip dark"><b>역할</b>PM 김성진</span>
+    <span class="chip"><b>행사</b>goorm HACKATHON 2026</span>
+    <span class="chip"><b>기간</b>2026.03.26.</span>
+    <span class="chip"><b>팀</b>우상향 3팀 · 5인</span>
+  </div>
+  <div class="trio">
+    <div class="phone"><div class="scr"><img src="images/login.png" alt="TRADEMIND 로그인 화면"></div></div>
+    <div class="phone"><div class="scr"><img src="images/start.png" alt="대화 시작 화면: 지금 어떤 이야기를 하고 싶으세요?"></div></div>
+    <div class="phone"><div class="scr"><img src="images/home.png" alt="홈 화면: 오늘 투자자들의 감정"></div></div>
+  </div>
+  <p class="scrollhint">긴 화면은 휴대폰 안에서 위아래로 넘겨 볼 수 있어요</p>
+</div></header>
+
+<section id="problem"><div class="wrap">
+  <div class="center"><span class="eyebrow">PROBLEM</span>
+  <h2>정보는 많은데,<br>왜 판단은 더 흔들릴까?</h2></div>
+  <div class="stats">
+    <div class="stat"><div class="num">1,423<small>만 명</small></div><div class="lab">국내 개인 투자자</div><div class="src">한국예탁결제원 (2024)</div><div class="bar"><i style="width:35%"></i></div></div>
+    <div class="stat"><div class="num">5.9<small>일</small></div><div class="lab">MZ세대 평균 주식 보유 기간</div><div class="src">자본시장연구원 (2021)</div><div class="bar"><i style="width:12%"></i></div></div>
+    <div class="stat"><div class="num">80<small>% ↓</small></div><div class="lab">공포·불안 속 판단력 저하</div><div class="src">행동재무학 학술 자료</div><div class="bar"><i style="width:80%"></i></div></div>
+  </div>
+  <div class="punch"><div class="x"><s>정보가 부족해서</s> &nbsp;→&nbsp; <em>감정이 판단을 덮어서</em> 흔들립니다</div></div>
+</div></section>
+
+<section class="gap" id="gap"><div class="wrap">
+  <div class="center"><span class="eyebrow">MARKET GAP</span>
+  <h2>아직 아무도 없는 자리</h2>
+  <p class="lead">투자 맥락을 아는 서비스와 감정을 돌보는 서비스는 따로 있습니다.</p></div>
+  <div class="venn">
+    <svg viewBox="0 0 820 440" role="img" aria-label="벤다이어그램: 투자 맥락 이해와 감정 개입이 겹치는 곳에 TRADEMIND가 있다">
+      <defs>
+        <radialGradient id="ga" cx="40%" cy="35%"><stop offset="0" stop-color="#c9d6fb"/><stop offset="1" stop-color="#8ea6ee"/></radialGradient>
+        <radialGradient id="gb" cx="60%" cy="65%"><stop offset="0" stop-color="#fde3da"/><stop offset="1" stop-color="#f6a58c"/></radialGradient>
+        <clipPath id="cl"><circle cx="300" cy="220" r="200"/></clipPath>
+      </defs>
+      <circle cx="300" cy="220" r="200" fill="url(#ga)" opacity=".55"/>
+      <circle cx="520" cy="220" r="200" fill="url(#gb)" opacity=".6"/>
+      <circle cx="520" cy="220" r="200" fill="#1c1917" clip-path="url(#cl)"/>
+      <g font-family="SUIT Variable, sans-serif" text-anchor="middle">
+        <text x="205" y="118" font-size="19" font-weight="800" fill="#2b3558">투자 맥락 이해</text>
+        <text x="615" y="118" font-size="19" font-weight="800" fill="#8a4a36">감정 개입</text>
+        <g font-size="15" font-weight="700" fill="#2b3558">
+          <rect x="128" y="176" width="150" height="38" rx="19" fill="#fff" opacity=".85"/><text x="203" y="200">증권사 MTS</text>
+          <rect x="128" y="228" width="150" height="38" rx="19" fill="#fff" opacity=".85"/><text x="203" y="252">투자 교육 앱</text>
+        </g>
+        <g font-size="15" font-weight="700" fill="#8a4a36">
+          <rect x="545" y="202" width="150" height="38" rx="19" fill="#fff" opacity=".85"/><text x="620" y="226">일반 명상 앱</text>
+        </g>
+        <text x="410" y="212" font-family="DM Serif Display, serif" font-size="25" fill="#fff">TRADE</text>
+        <text x="410" y="240" font-family="DM Serif Display, serif" font-size="25" fill="#fff">MIND</text>
+        <text x="410" y="268" font-size="12" font-weight="600" fill="#d6d3d1">맥락 × 감정</text>
+      </g>
+    </svg>
+  </div>
+  <div class="legend">
+    <div><b>MTS · 교육 앱</b>거래와 지식은 주지만,<br>폭락장의 공포에는 개입하지 못해요</div>
+    <div class="me"><b>TRADEMIND</b>투자 맥락 안에서,<br>흔들리는 그 순간에 말을 겁니다</div>
+    <div><b>명상 앱</b>마음은 달래주지만,<br>시장 맥락을 이해하지 못해요</div>
+  </div>
+</div></section>
+
+<section id="solution"><div class="wrap">
+  <div class="center"><span class="eyebrow">SOLUTION</span>
+  <h2>기능이 아닌, 사람의 흐름으로</h2>
+  <p class="lead">CBT(인지행동치료) 프레임으로 감정과 판단을 분리해 보게 하고,<br>기록으로 습관을 만듭니다.</p></div>
+
+  <div class="flow">
+    <div class="step"><div class="no">01</div><h3>점검</h3><p>불안이 올라올 때,<br>선택지로 상황을 말해요</p>
+      <div class="phone sm"><div class="scr"><img src="images/emotion.png" alt="감정 선택 화면" loading="lazy"></div></div></div>
+    <div class="step"><div class="no">02</div><h3>개입</h3><p>AI가 왜곡을 짚고, 질문 하나를 겨냥해요</p>
+      <div class="phone sm"><div class="scr"><img src="images/chat2.png" alt="AI 대화 화면" loading="lazy"></div></div></div>
+    <div class="step"><div class="no">03</div><h3>선택</h3><p>관망할지 진행할지, 스스로 언어화해요</p>
+      <div class="phone sm"><div class="scr"><img src="images/result.png" alt="매매 전 점검 결과 화면" loading="lazy"></div></div></div>
+    <div class="step"><div class="no">04</div><h3>기록</h3><p>반복되는 내 패턴을 직접 확인해요</p>
+      <div class="phone sm"><div class="scr"><img src="images/record.png" alt="내 기록 화면" loading="lazy"></div></div></div>
+  </div>
+
+  <div class="strip">
+    <h3>한 번의 점검, 화면으로 따라가기</h3>
+    <p>"삼성전자가 3일 연속 하락 중" 인 순간을 예로 들었어요 · 옆으로 넘겨 보세요</p>
+    <div class="rail">
+      <figure><div class="phone sm"><div class="scr"><img src="images/start.png" alt="" loading="lazy"></div></div><figcaption>① 시작<span>사전 · 사후 중 선택</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/situation.png" alt="" loading="lazy"></div></div><figcaption>② 상황<span>급등 · 급락 · 횡보</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/emotion.png" alt="" loading="lazy"></div></div><figcaption>③ 감정<span>불안 · 조급 · 확신 · 후회</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/worry.png" alt="" loading="lazy"></div></div><figcaption>④ 생각<span>가장 걸리는 한 가지</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/ready.png" alt="" loading="lazy"></div></div><figcaption>⑤ 브릿지<span>입력 내용 되짚기</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/bridge.png" alt="" loading="lazy"></div></div><figcaption>⑥ 대화 준비<span>투자 조언이 아님을 고지</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/chat1.png" alt="" loading="lazy"></div></div><figcaption>⑦ 왜곡 분류<span>공감 + 질문 1개</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/chat2.png" alt="" loading="lazy"></div></div><figcaption>⑧ 메타인지<span>근거인가, 감정인가</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/result.png" alt="" loading="lazy"></div></div><figcaption>⑨ 결과<span>관망 / 진행 선택</span></figcaption></figure>
+      <figure><div class="phone sm"><div class="scr"><img src="images/post.png" alt="" loading="lazy"></div></div><figcaption>사후 복기<span>이미 한 매매 돌아보기</span></figcaption></figure>
+    </div>
+  </div>
+
+  <div class="dist">
+    <h3>AI는 답을 주지 않고, 왜곡에 이름을 붙입니다</h3>
+    <p>앱이 사용자의 말로 바꿔 부르는 인지 왜곡</p>
+    <div class="tags">
+      <span>⚡ 지금 아니면 안된다는 생각</span>
+      <span>🌪️ 최악을 상상하고 있어요</span>
+      <span>🏃 나만 뒤쳐지는 것 같은 느낌</span>
+      <span>📌 처음 본 가격에 묶여 있어요</span>
+      <span>🚨 불안함이 신호처럼 느껴져요</span>
+    </div>
+    <div class="qa">
+      <div><b>공감</b>3일 연속 하락이면 정말 불안하셨겠어요.</div><i>→</i>
+      <div><b>질문 1개</b>처음 매수했을 때의 근거가 오늘도 여전히 유효한가요?</div><i>→</i>
+      <div><b>스스로 답하기</b>매수 근거가 바뀌었어요 / 감정 때문인 것 같아요</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="together"><div class="wrap tog">
+  <div>
+    <span class="eyebrow">TOGETHER</span>
+    <h2>혼자가 아니라는<br>심리적 안전감</h2>
+    <p class="lead">비슷한 상황의 투자자들이 어떤 선택을 했는지 익명으로 보여줘, 고립된 판단을 집단의 경험으로 보완합니다.</p>
+    <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="잠시 관망 75%, 그래도 진행 25%">
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#e7e5e4" stroke-width="13"/>
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#1c1917" stroke-width="13" stroke-linecap="round" stroke-dasharray="216.8 289" transform="rotate(-90 60 60)"/>
+      <text x="60" y="60" text-anchor="middle" font-family="SUIT Variable, sans-serif" font-size="24" font-weight="800" fill="#1a1a1a">75%</text>
+      <text x="60" y="76" text-anchor="middle" font-family="SUIT Variable, sans-serif" font-size="8.5" fill="#79716b">잠시 관망</text>
+    </svg>
+    <div class="dl"><span>잠시 관망 75%</span><span>그래도 진행 25%</span></div>
+    <p class="note">* 프로토타입 화면의 예시 수치입니다.</p>
+    <div class="quote">"손절하고 나서 다음 날 반등한 적이 있어서, 원칙부터 다시 확인했어요."</div>
+  </div>
+  <div class="vis">
+    <div class="phone"><div class="scr"><img src="images/result.png" alt="TOGETHER 데이터가 보이는 결과 화면" loading="lazy"></div></div>
+    <div class="phone" style="margin-top:44px"><div class="scr"><img src="images/home.png" alt="오늘 투자자들의 감정 집계 홈 화면" loading="lazy"></div></div>
+  </div>
+</div></section>
+
+<section class="dec" id="decision"><div class="wrap">
+  <div class="center"><span class="eyebrow">DECISION</span>
+  <h2>더 많은 기능보다,<br>믿을 수 있는 AI 경험</h2></div>
+
+  <div class="arch">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="구조도: 앱에서 Spring과 FastAPI로 나뉘고 Redis가 실시간 흐름을 맡는다">
+      <g font-family="SUIT Variable, sans-serif" text-anchor="middle">
+        <rect x="20" y="105" width="170" height="90" rx="24" fill="#1c1917"/><text x="105" y="146" font-size="18" font-weight="800" fill="#fff">앱 (사용자)</text><text x="105" y="170" font-size="12.5" fill="#d6d3d1">입력 UX 구조화</text>
+        <rect x="310" y="20" width="250" height="100" rx="24" fill="#dfe7fb"/><text x="435" y="62" font-size="19" font-weight="800" fill="#2b3558">Spring</text><text x="435" y="88" font-size="13.5" fill="#44403c">인증 · 기록 · 집계</text>
+        <rect x="310" y="180" width="250" height="100" rx="24" fill="#fce1d9"/><text x="435" y="222" font-size="19" font-weight="800" fill="#8a4a36">Python FastAPI</text><text x="435" y="248" font-size="13.5" fill="#44403c">LLM 호출 · 프롬프트 가드레일</text>
+        <rect x="690" y="20" width="130" height="100" rx="24" fill="#fff" stroke="#e7e5e4" stroke-width="2"/><text x="755" y="62" font-size="18" font-weight="800" fill="#1a1a1a">Redis</text><text x="755" y="88" font-size="13" fill="#79716b">SSE 실시간</text>
+        <rect x="850" y="20" width="130" height="100" rx="24" fill="#fff" stroke="#e7e5e4" stroke-width="2"/><text x="915" y="62" font-size="18" font-weight="800" fill="#1a1a1a">DB</text><text x="915" y="88" font-size="13" fill="#79716b">필요한 것만</text>
+        <rect x="690" y="180" width="290" height="100" rx="24" fill="#fff" stroke="#e7e5e4" stroke-width="2"/><text x="835" y="222" font-size="18" font-weight="800" fill="#1a1a1a">CBT 기반 응답</text><text x="835" y="248" font-size="13" fill="#79716b">투자 조언 ✕ · 감정 정리와 판단 분리 ○</text>
+        <g stroke="#a8a29e" stroke-width="2.5" fill="none" stroke-linecap="round">
+          <path d="M190 135 C250 135 250 70 304 70"/><path d="M190 165 C250 165 250 230 304 230"/>
+          <path d="M435 122 V176" stroke-dasharray="5 7"/>
+          <path d="M562 70 H684"/><path d="M822 70 H846"/><path d="M562 230 H684"/>
+        </g>
+        <g fill="#a8a29e"><path d="M304 70l-9-5v10z"/><path d="M304 230l-9-5v10z"/><path d="M684 70l-9-5v10z"/><path d="M846 70l-9-5v10z"/><path d="M684 230l-9-5v10z"/></g>
+        <text x="435" y="154" font-size="12" font-weight="700" fill="#79716b" dx="62">추론과 로직 분리</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="to">
+    <div class="tcard"><div class="case">TRADE-OFF 01</div><h3>AI 답변 품질을 어떻게 올릴까</h3>
+      <div class="vs"><div class="no"><b>포기</b>백엔드 · 프롬프트 대대적 수정</div><i>→</i><div class="yes"><b>선택</b>입력 단계 UX 구조화</div></div>
+      <p class="why">상황 · 감정 · 생각을 나눠 받으면, 구조를 건드리지 않고도 AI가 받는 입력이 좋아집니다.</p></div>
+    <div class="tcard"><div class="case">TRADE-OFF 02</div><h3>어떻게 배포할까</h3>
+      <div class="vs"><div class="no"><b>포기</b>프론트 · 백 · AI 분산 배포</div><i>→</i><div class="yes"><b>선택</b>단일 EC2 통합 배포</div></div>
+      <p class="why">해커톤에서는 완전함보다 끝까지 구현하고 안정적으로 시연하는 것이 먼저였습니다.</p></div>
+  </div>
+</div></section>
+
+<section id="next"><div class="wrap">
+  <div class="center"><span class="eyebrow">HYPOTHESIS · NEXT</span>
+  <h2>가설과 검증 계획</h2>
+  <p class="lead">해커톤에서는 프로토타입까지 만들었습니다. 효과는 아직 입증 전이며,<br>아래 계획으로 확인합니다.</p></div>
+  <div class="hv">
+    <div class="h"><span>가설</span><h3>손실의 원인은 정보 부족이 아니라 감정 기반 의사결정이고, CBT 개입으로 교정할 수 있다.</h3><p>상태: 프로토타입 구현 완료 · 사용자 데이터 미확보</p></div>
+    <div class="v"><span>검증 계획</span><h3>개입 전후, 행동이 달라지는가</h3><ul><li>점검 후 "잠시 관망" 선택 비율</li><li>사후 복기에서 후회 기록의 변화</li><li>같은 왜곡 유형의 반복 빈도</li></ul></div>
+  </div>
+  <div class="road">
+    <div><b>NOW · MVP</b><h4>사전·사후 감정 개입</h4><p>멘탈 캘린더 기록 · 인지 왜곡 분류</p></div>
+    <div><b>NEXT</b><h4>개인화</h4><p>반복 패턴 분석 · 시장 이벤트 감지 알림</p></div>
+    <div><b>LATER · B2B2C</b><h4>채널 확장</h4><p>증권사 포트폴리오 연동 · 집단 맥락 고도화</p></div>
+  </div>
+  <div class="bm">
+    <div class="k"><b>TRADEMIND</b><small>AI 감정 개입 서비스</small></div><i>→</i>
+    <div><b>증권사 · 핀테크</b><small>채널 파트너</small></div><i>→</i>
+    <div><b>개인 투자자</b><small>1,423만 명</small></div>
+  </div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="center"><span class="eyebrow">RETROSPECT</span><h2>PM으로서 배운 것</h2></div>
+  <div class="retro">
+    <div><div class="n">1</div><h3>기술보다 먼저, 사용자의 감정을 설계한다</h3><p>CBT 프레임을 서비스 흐름으로 옮기는 기획이 개발의 출발점이었습니다.</p></div>
+    <div><div class="n">2</div><h3>데이터로 문제를 증명한다</h3><p>'감정적 판단' 가설을 수치로 뒷받침한 것이 팀 설득의 핵심이었습니다.</p></div>
+    <div><div class="n">3</div><h3>트레이드오프는 포기가 아닌 선택</h3><p>제약 안에서 무엇을 버릴지 정하는 것이 PM의 일이었습니다.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="aura" style="width:84px;height:84px;margin-bottom:18px" aria-hidden="true"></div>
+  <div class="serif">TRADEMIND</div>
+  <p>당신의 자산이 흔들릴 때, 가장 먼저 말을 건네는 동료</p>
+  <p class="fine">goorm HACKATHON 2026 · 우상향 3팀 · PM 김성진<br>화면은 해커톤 프로토타입 디자인이며, 서비스의 답변은 투자 조언이 아닙니다.</p>
+</div></footer>
+</body>
+</html>
